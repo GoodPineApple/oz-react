@@ -2,31 +2,26 @@ import { Box, Container, Paper, Typography, Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArticleIcon from '@mui/icons-material/Article';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router';
+import { useAuth } from '../auth/AuthContext';
+import { signOut } from 'firebase/auth';
 import { auth } from '../util/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import LoginIcon from '@mui/icons-material/Login';
 
 function Home() {
-  const [user, setUser] = useState(null);
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if(user) {
-        console.log('User is logged in');
-        setUser(user);
-      } else {
-        console.log('User is logged out');
-        setUser(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  if(!user) {
-    return <div>Loading...</div>;
-  }
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/auth/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   return (
     <Box
@@ -113,6 +108,41 @@ function Home() {
             >
               Posts
             </Button>
+            {user ? (
+                <Button
+                  variant="outlined"
+                  color="error"
+                  size="large"
+                  startIcon={<LogoutIcon />}
+                  onClick={handleLogout}
+                  sx={{ 
+                    px: 3, 
+                    py: 1.5,
+                    borderRadius: 2,
+                    textTransform: 'none',
+                    fontSize: '1.1rem'
+                  }}
+                >
+                  로그아웃
+                </Button>
+            ) : (
+              <Button
+                variant="contained"
+                component={Link}
+                to="/auth/login"
+                size="large"
+                startIcon={<LoginIcon />}
+                sx={{ 
+                  px: 3, 
+                  py: 1.5,
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontSize: '1.1rem'
+                }}
+              >
+                로그인
+              </Button>
+            )}
           </Box>
         </Paper>
       </Container>
