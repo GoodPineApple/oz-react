@@ -13,7 +13,8 @@ import {
 } from '@mui/material'
 import { 
   Article as ArticleIcon,
-  Description as DescriptionIcon
+  Description as DescriptionIcon,
+  LocalFireDepartment as FireIcon
 } from '@mui/icons-material'
 
 function SideNavigation() {
@@ -50,9 +51,20 @@ function SideNavigation() {
             variant="contained"
             fullWidth
             startIcon={<ArticleIcon />}
-            sx={{ mb: 3, py: 1.5 }}
+            sx={{ mb: 2, py: 1.5 }}
           >
             📋 All Posts
+          </Button>
+          
+          <Button
+            component={Link}
+            to="/fireposts"
+            variant="outlined"
+            fullWidth
+            startIcon={<FireIcon />}
+            sx={{ mb: 3, py: 1.5 }}
+          >
+            🔥 Fire Posts
           </Button>
           
           <Typography 

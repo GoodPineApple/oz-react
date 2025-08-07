@@ -3,6 +3,8 @@ import './App.css'
 import { Routes, Route } from 'react-router'
 import Posts from './posts/Posts'
 import Post from './posts/Post'
+import FirePosts from './fireposts/FirePosts'
+import FirePost from './fireposts/FirePost'
 import Counter from './info/counter/Counter'
 import BasicLayout from './components/layouts/BasicLayout'
 import PostLayout from './components/layouts/PostLayout'
@@ -41,6 +43,10 @@ function App() {
         <Route path="/posts" element={<PostLayout />}>
           <Route index element={<Posts />} />
           <Route path=":postId" element={<Post />} />
+        </Route>
+        <Route path="/fireposts" element={<PostLayout />}>
+          <Route index element={<FirePosts />} />
+          <Route path=":postId" element={<FirePost />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
