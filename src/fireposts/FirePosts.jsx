@@ -202,6 +202,7 @@ function FirePosts() {
       </div>
       
       <PostList 
+        from={'fireposts'}
         posts={currentPosts} 
         loading={loading} 
         error={error}
