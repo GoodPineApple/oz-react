@@ -7,7 +7,7 @@ import {
   Chip 
 } from '@mui/material'
 
-function PostCard({ post, searchTerm, highlightEnabled }) {
+function PostCard({ from, post, searchTerm, highlightEnabled }) {
   // 텍스트에서 검색어를 하이라이팅하는 함수
   const highlightText = (text, term) => {
     if (!term || !highlightEnabled) {
@@ -26,7 +26,7 @@ function PostCard({ post, searchTerm, highlightEnabled }) {
   }
 
   return (
-    <Link to={`/posts/${post.id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/${from}/${post.id}`} style={{ textDecoration: 'none' }}>
       <Card 
         elevation={2} 
         sx={{ 

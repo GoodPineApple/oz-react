@@ -9,7 +9,8 @@ import SearchFilter from '../components/posts/SearchFilter'
 import RefreshControl from '../components/posts/RefreshControl'
 import Pagination from '../components/posts/Pagination'
 import { Button, Alert, Box } from '@mui/material'
-import { Add as AddIcon } from '@mui/icons-material'
+import { Add as AddIcon, Edit as EditIcon } from '@mui/icons-material'
+import { Link } from 'react-router'
 
 function FirePosts() {
   const [posts, setPosts] = useState([])
@@ -133,20 +134,35 @@ function FirePosts() {
     <div className="space-y-6">
       <Header postsCount={filteredPosts.length} />
       
+      {/* 액션 버튼들 */}
+      <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+        <Button
+          component={Link}
+          to="/fireposts/create"
+          variant="contained"
+          startIcon={<EditIcon />}
+          size="large"
+        >
+          새 포스트 작성
+        </Button>
+        
+        {posts.length === 0 && (
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={handleCreateSampleData}
+            disabled={creatingSampleData}
+          >
+            {creatingSampleData ? '생성 중...' : '샘플 데이터 생성'}
+          </Button>
+        )}
+      </Box>
+      
       {/* 샘플 데이터 생성 섹션 */}
       {posts.length === 0 && (
         <Alert severity="info" sx={{ mb: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <span>아직 포스트가 없습니다. 샘플 데이터를 생성해보세요!</span>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={handleCreateSampleData}
-              disabled={creatingSampleData}
-              size="small"
-            >
-              {creatingSampleData ? '생성 중...' : '샘플 데이터 생성'}
-            </Button>
+            <span>아직 포스트가 없습니다. 새 포스트를 작성하거나 샘플 데이터를 생성해보세요!</span>
           </Box>
         </Alert>
       )}

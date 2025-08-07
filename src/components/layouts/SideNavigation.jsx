@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link, useLocation } from 'react-router'
 import { 
   Box, 
   Paper, 
@@ -18,7 +18,12 @@ import {
 } from '@mui/icons-material'
 
 function SideNavigation() {
+  const location = useLocation()
   const popularPosts = [1, 2, 3, 4, 5, 10, 15, 20, 25, 50]
+  
+  // 현재 경로에 따라 버튼 스타일 결정
+  const isPostsActive = location.pathname.startsWith('/posts') && !location.pathname.startsWith('/fireposts')
+  const isFirePostsActive = location.pathname.startsWith('/fireposts')
   
   return (
     <Paper 
@@ -48,7 +53,7 @@ function SideNavigation() {
           <Button
             component={Link}
             to="/posts"
-            variant="contained"
+            variant={isPostsActive ? "contained" : "outlined"}
             fullWidth
             startIcon={<ArticleIcon />}
             sx={{ mb: 2, py: 1.5 }}
@@ -59,7 +64,7 @@ function SideNavigation() {
           <Button
             component={Link}
             to="/fireposts"
-            variant="outlined"
+            variant={isFirePostsActive ? "contained" : "outlined"}
             fullWidth
             startIcon={<FireIcon />}
             sx={{ mb: 3, py: 1.5 }}

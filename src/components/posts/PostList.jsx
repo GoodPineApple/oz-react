@@ -3,7 +3,7 @@ import PostCard from './PostCard'
 import SkeletonCard from './SkeletonCard'
 import ErrorMessage from './ErrorMessage'
 
-function PostList({ posts, loading, error, searchTerm, highlightEnabled }) {
+function PostList({ from, posts, loading, error, searchTerm, highlightEnabled }) {
   if (loading) {
     return (
       <Grid container spacing={3}>
@@ -25,6 +25,7 @@ function PostList({ posts, loading, error, searchTerm, highlightEnabled }) {
       {posts.map(post => (
         <Grid item xs={12} md={6} lg={4} key={post.id}>
           <PostCard 
+            from={from}
             post={post} 
             searchTerm={searchTerm}
             highlightEnabled={highlightEnabled}

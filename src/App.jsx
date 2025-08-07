@@ -5,6 +5,7 @@ import Posts from './posts/Posts'
 import Post from './posts/Post'
 import FirePosts from './fireposts/FirePosts'
 import FirePost from './fireposts/FirePost'
+import FirePostCreate from './fireposts/FirePostCreate'
 import Counter from './info/counter/Counter'
 import BasicLayout from './components/layouts/BasicLayout'
 import PostLayout from './components/layouts/PostLayout'
@@ -46,6 +47,7 @@ function App() {
         </Route>
         <Route path="/fireposts" element={<PostLayout />}>
           <Route index element={<FirePosts />} />
+          <Route path="create" element={<FirePostCreate />} />
           <Route path=":postId" element={<FirePost />} />
         </Route>
         <Route path="*" element={<NotFound />} />

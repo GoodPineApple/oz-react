@@ -116,6 +116,7 @@ function Posts() {
       </div>
       
       <PostList 
+        from={'posts'}
         posts={currentPosts} 
         loading={loading} 
         error={error}

@@ -28,7 +28,8 @@ import {
   Person as PersonIcon,
   Comment as CommentIcon,
   AccessTime as AccessTimeIcon,
-  Add as AddIcon
+  Add as AddIcon,
+  Edit as EditIcon
 } from '@mui/icons-material'
 
 const FirePost = () => {
@@ -219,16 +220,24 @@ const FirePost = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Stack spacing={4}>
-        {/* 뒤로가기 버튼 */}
-        <Box>
+        {/* 뒤로가기 버튼과 글 작성 버튼 */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Button
             component={Link}
             to="/fireposts"
             variant="outlined"
             startIcon={<ArrowBackIcon />}
-            sx={{ mb: 2 }}
           >
             목록으로 돌아가기
+          </Button>
+          
+          <Button
+            component={Link}
+            to="/fireposts/create"
+            variant="contained"
+            startIcon={<EditIcon />}
+          >
+            새 포스트 작성
           </Button>
         </Box>
 
