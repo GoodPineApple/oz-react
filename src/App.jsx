@@ -1,5 +1,6 @@
 import './App.css'
 
+import { createContext, useState } from 'react'
 import { Routes, Route } from 'react-router'
 import Posts from './posts/Posts'
 import Post from './posts/Post'
@@ -19,40 +20,43 @@ import Logout from './auth/Logout'
 import EmailVerification from './auth/EmailVerification'
 import ProtectedRoute from './auth/ProtectedRoute'
 import { AuthProvider } from './auth/AuthContext'
+import { ThemeProvider } from './util/ThemeContext'
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        {/* 인증 관련 라우트 */}
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/signup" element={<Signup />} />
-        <Route path="/auth/email-verification" element={<EmailVerification />} />
-        <Route path="/auth/logout" element={<Logout />} />
-        
-        {/* 보호된 라우트 */}
-        <Route path="/" element={<Home />} />
-        <Route path="/info" element={<BasicLayout />}>
-          <Route path="about" element={<About />} />
-          <Route path="counter" element={
-            <ProtectedRoute>
-              <Counter />
-            </ProtectedRoute>
-          } />
-          <Route path="location" element={<Location />} />
-        </Route>
-        <Route path="/posts" element={<PostLayout />}>
-          <Route index element={<Posts />} />
-          <Route path=":postId" element={<Post />} />
-        </Route>
-        <Route path="/fireposts" element={<PostLayout />}>
-          <Route index element={<FirePosts />} />
-          <Route path="create" element={<FirePostCreate />} />
-          <Route path=":postId" element={<FirePost />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <Routes>
+          {/* 인증 관련 라우트 */}
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/signup" element={<Signup />} />
+          <Route path="/auth/email-verification" element={<EmailVerification />} />
+          <Route path="/auth/logout" element={<Logout />} />
+          
+          {/* 보호된 라우트 */}
+          <Route path="/" element={<Home />} />
+          <Route path="/info" element={<BasicLayout />}>
+            <Route path="about" element={<About />} />
+            <Route path="counter" element={
+              <ProtectedRoute>
+                <Counter />
+              </ProtectedRoute>
+            } />
+            <Route path="location" element={<Location />} />
+          </Route>
+          <Route path="/posts" element={<PostLayout />}>
+            <Route index element={<Posts />} />
+            <Route path=":postId" element={<Post/>} />
+          </Route>
+          <Route path="/fireposts" element={<PostLayout />}>
+            <Route index element={<FirePosts />} />
+            <Route path="create" element={<FirePostCreate />} />
+            <Route path=":postId" element={<FirePost />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

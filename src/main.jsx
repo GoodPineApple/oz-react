@@ -8,26 +8,38 @@ import './App.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router'
 import { StyledEngineProvider } from '@mui/material/styles';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import { ThemeProvider } from './util/ThemeContext'
+import { useContext } from 'react'
+import { ThemeContext } from './util/ThemeContext'
 
-// Material UI 테마 생성
-const theme = createTheme({
+// 테마 생성 함수
+const createAppTheme = (mode) => createTheme({
   palette: {
+    mode,
     primary: {
-      main: '#1976d2',
+      main: mode === 'light' ? '#1976d2' : '#90caf9',
     },
     secondary: {
-      main: '#dc004e',
+      main: mode === 'light' ? '#dc004e' : '#f48fb1',
     },
     success: {
-      main: '#2e7d32',
+      main: mode === 'light' ? '#2e7d32' : '#66bb6a',
     },
     info: {
-      main: '#0288d1',
+      main: mode === 'light' ? '#0288d1' : '#29b6f6',
     },
     warning: {
-      main: '#ed6c02',
+      main: mode === 'light' ? '#ed6c02' : '#ffa726',
+    },
+    background: {
+      default: mode === 'light' ? '#fafafa' : '#121212',
+      paper: mode === 'light' ? '#ffffff' : '#1e1e1e',
+    },
+    text: {
+      primary: mode === 'light' ? '#000000' : '#ffffff',
+      secondary: mode === 'light' ? '#666666' : '#aaaaaa',
     },
   },
   typography: {
@@ -72,13 +84,25 @@ const theme = createTheme({
   },
 });
 
+// Material-UI 테마를 적용하는 래퍼 컴포넌트
+const ThemedApp = () => {
+  const { theme } = useContext(ThemeContext)
+  const muiTheme = createAppTheme(theme)
+
+  return (
+    <MuiThemeProvider theme={muiTheme}>
+      <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
+      <App />
+    </MuiThemeProvider>
+  )
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <StyledEngineProvider enableCssLayer>
-        <ThemeProvider theme={theme}>
-          <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
-          <App />
+        <ThemeProvider>
+          <ThemedApp />
         </ThemeProvider>
       </StyledEngineProvider>
     </BrowserRouter>

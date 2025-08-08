@@ -1,3 +1,4 @@
+import { useContext, useEffect } from 'react';
 import { Box, Container, Paper, Typography, Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -9,10 +10,20 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../util/firebase';
 import { useNavigate } from 'react-router';
 import LoginIcon from '@mui/icons-material/Login';
+import { ThemeContext } from '../util/ThemeContext';
+import { useTheme } from '@mui/material/styles';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 function Home() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const muiTheme = useTheme();
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]);
 
   const handleLogout = async () => {
     try {
@@ -20,6 +31,15 @@ function Home() {
       navigate('/auth/login');
     } catch (error) {
       console.error('Logout error:', error);
+    }
+  };
+
+  // 테마에 따른 배경 그라디언트 설정
+  const getBackgroundGradient = () => {
+    if (theme === 'light') {
+      return 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)';
+    } else {
+      return 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)';
     }
   };
 
@@ -31,28 +51,78 @@ function Home() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
-        px: 2
+        background: getBackgroundGradient(),
+        px: 2,
+        transition: 'background 0.3s ease',
       }}
     >
       <Container maxWidth="md">
+        {/* 테마 토글 버튼 개선 */}
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <Button 
+            onClick={toggleTheme}
+            variant="contained"
+            startIcon={theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+            sx={{
+              borderRadius: 2,
+              textTransform: 'none',
+              fontWeight: 500,
+              px: 3,
+              py: 1,
+            }}
+          >
+            {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+          </Button>
+        </Box>
+
         <Paper
           elevation={8}
           sx={{
             p: 4,
             textAlign: 'center',
             borderRadius: 3,
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(10px)'
+            background: theme === 'light' 
+              ? 'rgba(255, 255, 255, 0.95)' 
+              : 'rgba(30, 30, 30, 0.95)',
+            backdropFilter: 'blur(10px)',
+            border: theme === 'dark' ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
+            transition: 'all 0.3s ease',
           }}
         >
-          <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+          <Typography 
+            variant="h2" 
+            component="h1" 
+            gutterBottom 
+            sx={{ 
+              fontWeight: 'bold', 
+              color: 'text.primary',
+              transition: 'color 0.3s ease',
+            }}
+          >
             Welcome to My React App
           </Typography>
-          <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: 'primary.main', mb: 3 }}>
+          <Typography 
+            variant="h3" 
+            component="h2" 
+            gutterBottom 
+            sx={{ 
+              fontWeight: 'bold', 
+              color: 'primary.main', 
+              mb: 3,
+              transition: 'color 0.3s ease',
+            }}
+          >
             Hello world! 🚀
           </Typography>
-          <Typography variant="h6" color="text.secondary" paragraph sx={{ mb: 4 }}>
+          <Typography 
+            variant="h6" 
+            color="text.secondary" 
+            paragraph 
+            sx={{ 
+              mb: 4,
+              transition: 'color 0.3s ease',
+            }}
+          >
             This is the home page without any layout. Built with React, Vite & Material UI.
           </Typography>
           
@@ -69,7 +139,8 @@ function Home() {
                 py: 1.5,
                 borderRadius: 2,
                 textTransform: 'none',
-                fontSize: '1.1rem'
+                fontSize: '1.1rem',
+                transition: 'all 0.3s ease',
               }}
             >
               About
@@ -86,7 +157,8 @@ function Home() {
                 py: 1.5,
                 borderRadius: 2,
                 textTransform: 'none',
-                fontSize: '1.1rem'
+                fontSize: '1.1rem',
+                transition: 'all 0.3s ease',
               }}
             >
               Counter
@@ -103,7 +175,8 @@ function Home() {
                 py: 1.5,
                 borderRadius: 2,
                 textTransform: 'none',
-                fontSize: '1.1rem'
+                fontSize: '1.1rem',
+                transition: 'all 0.3s ease',
               }}
             >
               Posts
@@ -120,7 +193,8 @@ function Home() {
                     py: 1.5,
                     borderRadius: 2,
                     textTransform: 'none',
-                    fontSize: '1.1rem'
+                    fontSize: '1.1rem',
+                    transition: 'all 0.3s ease',
                   }}
                 >
                   로그아웃
@@ -137,7 +211,8 @@ function Home() {
                   py: 1.5,
                   borderRadius: 2,
                   textTransform: 'none',
-                  fontSize: '1.1rem'
+                  fontSize: '1.1rem',
+                  transition: 'all 0.3s ease',
                 }}
               >
                 로그인
