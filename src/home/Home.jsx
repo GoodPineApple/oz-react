@@ -11,13 +11,11 @@ import { auth } from '../util/firebase';
 import { useNavigate } from 'react-router';
 import LoginIcon from '@mui/icons-material/Login';
 import { ThemeContext } from '../util/ThemeContext';
-import { useTheme } from '@mui/material/styles';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 function Home() {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const muiTheme = useTheme();
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -95,7 +93,7 @@ function Home() {
             gutterBottom 
             sx={{ 
               fontWeight: 'bold', 
-              color: 'text.primary',
+              color: theme === 'light' ? 'text.primary' : 'white',
               transition: 'color 0.3s ease',
             }}
           >
@@ -121,6 +119,7 @@ function Home() {
             sx={{ 
               mb: 4,
               transition: 'color 0.3s ease',
+              color: theme === 'light' ? 'text.secondary' : 'white',
             }}
           >
             This is the home page without any layout. Built with React, Vite & Material UI.
