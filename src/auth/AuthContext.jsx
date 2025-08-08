@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../util/firebase';
 
@@ -16,8 +16,25 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // 서버 기반 auth 상태 변경 감지
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const response = await fetch('http://localhost:3000/api/auth/user', {
+  //       method: 'GET',
+  //       credentials: 'include',
+  //     });
+  //     const data = await response.json();
+  //     setUser(data);
+  //     setLoading(false);
+  //   };
+  //   fetchUser();
+  // }, []);
+
+
+  // firebase 기반 auth 상태 변경 감지
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user);
       setUser(user);
       setLoading(false);
     });
@@ -25,13 +42,11 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const value = {
-    user,
-    loading
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{
+      user,
+      loading
+    }}>
       {children}
     </AuthContext.Provider>
   );

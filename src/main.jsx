@@ -13,6 +13,7 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import { ThemeProvider } from './util/ThemeContext'
 import { useContext } from 'react'
 import { ThemeContext } from './util/ThemeContext'
+import { AuthProvider } from './auth/AuthContext'
 
 // 테마 생성 함수
 const createAppTheme = (mode) => createTheme({
@@ -92,7 +93,9 @@ const ThemedApp = () => {
   return (
     <MuiThemeProvider theme={muiTheme}>
       <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </MuiThemeProvider>
   )
 }
