@@ -12,7 +12,8 @@ import {
   Article as ArticleIcon,
   Info as InfoIcon,
   CheckCircle as CheckCircleIcon,
-  LocationOn as LocationIcon
+  LocationOn as LocationIcon,
+  Add as CounterIcon
 } from '@mui/icons-material'
 
 function Header() {
@@ -64,6 +65,17 @@ function Header() {
               }}
             >
               Todo
+            </Button>
+            <Button
+              component={Link}
+              to="/info/counter"
+              startIcon={<CounterIcon />}
+              sx={{ 
+                color: 'text.secondary',
+                '&:hover': { color: 'primary.main' }
+              }}
+            >
+              Counter
             </Button>
             <Button
               component={Link}

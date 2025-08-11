@@ -14,6 +14,8 @@ import { ThemeProvider } from './util/ThemeContext'
 import { useContext } from 'react'
 import { ThemeContext } from './util/ThemeContext'
 import { AuthProvider } from './auth/AuthContext'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 // 테마 생성 함수
 const createAppTheme = (mode) => createTheme({
@@ -86,6 +88,7 @@ const createAppTheme = (mode) => createTheme({
 });
 
 // Material-UI 테마를 적용하는 래퍼 컴포넌트
+// eslint-disable-next-line react-refresh/only-export-components
 const ThemedApp = () => {
   const { theme } = useContext(ThemeContext)
   const muiTheme = createAppTheme(theme)
@@ -102,12 +105,14 @@ const ThemedApp = () => {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <StyledEngineProvider enableCssLayer>
-        <ThemeProvider>
-          <ThemedApp />
-        </ThemeProvider>
-      </StyledEngineProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <StyledEngineProvider enableCssLayer>
+          <ThemeProvider>
+            <ThemedApp />
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </BrowserRouter>
+    </Provider>
   </StrictMode>,
 )

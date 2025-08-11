@@ -7,6 +7,7 @@ import FirePosts from './fireposts/FirePosts'
 import FirePost from './fireposts/FirePost'
 import FirePostCreate from './fireposts/FirePostCreate'
 import Todo from './info/todo/Todo'
+import Counter from './info/counter/Counter'
 import BasicLayout from './components/layouts/BasicLayout'
 import PostLayout from './components/layouts/PostLayout'
 import NotFound from './components/NotFound'
@@ -37,6 +38,7 @@ function App() {
             <Todo />
           </ProtectedRoute>
         } />
+        <Route path="counter" element={<Counter />} />
         <Route path="location" element={<Location />} />
       </Route>
       <Route path="/posts" element={<PostLayout />}>
