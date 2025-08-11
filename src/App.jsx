@@ -1,13 +1,12 @@
 import './App.css'
 
-import { createContext, useState } from 'react'
 import { Routes, Route } from 'react-router'
 import Posts from './posts/Posts'
 import Post from './posts/Post'
 import FirePosts from './fireposts/FirePosts'
 import FirePost from './fireposts/FirePost'
 import FirePostCreate from './fireposts/FirePostCreate'
-import Counter from './info/counter/Counter'
+import Todo from './info/todo/Todo'
 import BasicLayout from './components/layouts/BasicLayout'
 import PostLayout from './components/layouts/PostLayout'
 import NotFound from './components/NotFound'
@@ -33,9 +32,9 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/info" element={<BasicLayout />}>
         <Route path="about" element={<About />} />
-        <Route path="counter" element={
+        <Route path="todo" element={
           <ProtectedRoute>
-            <Counter />
+            <Todo />
           </ProtectedRoute>
         } />
         <Route path="location" element={<Location />} />

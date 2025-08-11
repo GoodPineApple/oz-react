@@ -99,7 +99,7 @@ function NotFound() {
             </Button>
             <Button
               component={Link}
-              to="/info/counter"
+              to="/info/todo"
               variant="text"
               size="small"
               sx={{ 
@@ -109,7 +109,7 @@ function NotFound() {
                 }
               }}
             >
-              Counter
+              Todo
             </Button>
           </Stack>
         </Paper>

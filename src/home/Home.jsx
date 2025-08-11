@@ -146,7 +146,7 @@ function Home() {
             </Button>
             <Button
               component={Link}
-              to="/info/counter"
+              to="/info/todo"
               variant="contained"
               color="success"
               size="large"
@@ -160,7 +160,7 @@ function Home() {
                 transition: 'all 0.3s ease',
               }}
             >
-              Counter
+              Todo
             </Button>
             <Button
               component={Link}

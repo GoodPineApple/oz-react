@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import TaskInput from '../../components/counter/TaskInput'
-import TaskList from '../../components/counter/TaskList'
-import TaskCounter from '../../components/counter/TaskCounter'
 import { useNavigate } from 'react-router'
 import { 
   Stack, 
@@ -14,8 +11,11 @@ import {
   Snackbar
 } from '@mui/material'
 import { Article as ArticleIcon } from '@mui/icons-material'
+import TaskInput from '../../components/todo/TaskInput'
+import TaskList from '../../components/todo/TaskList'
+import TaskCounter from '../../components/todo/TaskCounter'
 
-function Counter() {
+function Todo() {
   const navigate = useNavigate()
   const [tasks, setTasks] = useState([])
   const [inputValue, setInputValue] = useState('')
@@ -136,4 +136,4 @@ function Counter() {
   )
 }
 
-export default Counter
+export default Todo

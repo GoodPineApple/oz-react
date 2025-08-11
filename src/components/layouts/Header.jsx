@@ -56,14 +56,14 @@ function Header() {
             </Button>
             <Button
               component={Link}
-              to="/info/counter"
+              to="/info/todo"
               startIcon={<CheckCircleIcon />}
               sx={{ 
                 color: 'text.secondary',
                 '&:hover': { color: 'primary.main' }
               }}
             >
-              Counter
+              Todo
             </Button>
             <Button
               component={Link}
