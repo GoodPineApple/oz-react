@@ -5,6 +5,25 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import { useLocation } from 'react-router';
 
+import { useState } from 'react';
+
+const ChildComponent = ({ onClick }) => {
+  console.log('ChildComponent rendered');
+  return <button onClick={onClick}>Click Me</button>;
+};
+
+function ParentComponent() {
+  const [count, setCount] = useState(0);
+  const handleClick = () => console.log('Button clicked');
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Increment: {count}</button>
+      <ChildComponent onClick={handleClick} />
+    </div>
+  );
+}
+
+
 function Location() {
     const location = useLocation()
     
@@ -37,6 +56,7 @@ function Location() {
   
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
+        <ParentComponent />
         <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
           <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold', mb: 4 }}>
             Location Info
