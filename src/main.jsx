@@ -13,9 +13,9 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import { ThemeProvider } from './util/ThemeContext'
 import { useContext } from 'react'
 import { ThemeContext } from './util/ThemeContext'
-import { AuthProvider } from './auth/AuthContext'
+import { AuthProvider } from './pages/auth/AuthContext'
 import { Provider } from 'react-redux'
-import { store } from './store'
+import { store } from './util/store'
 
 // 테마 생성 함수
 const createAppTheme = (mode) => createTheme({
