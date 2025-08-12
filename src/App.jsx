@@ -22,6 +22,8 @@ import Signup from './auth/Signup'
 import Logout from './auth/Logout'
 import EmailVerification from './auth/EmailVerification'
 import ProtectedRoute from './auth/ProtectedRoute'
+import Albums from './albums/Albums'
+import Album from './albums/Album'
 
 function App() {
   // 사용자 로그인했나요? isAuthenticated
@@ -56,6 +58,10 @@ function App() {
         <Route index element={<FirePosts />} />
         <Route path="create" element={<FirePostCreate />} />
         <Route path=":postId" element={<FirePost />} />
+      </Route>
+      <Route path="/albums">
+        <Route index element={<Albums />} />
+        <Route path=":albumId" element={<Album />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
