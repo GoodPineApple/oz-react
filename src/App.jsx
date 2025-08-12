@@ -3,11 +3,14 @@ import './App.css'
 import { Routes, Route } from 'react-router'
 import Posts from './posts/Posts'
 import Post from './posts/Post'
+import Users from './users/Users'
+import User from './users/User'
 import FirePosts from './fireposts/FirePosts'
 import FirePost from './fireposts/FirePost'
 import FirePostCreate from './fireposts/FirePostCreate'
 import Todo from './info/todo/Todo'
 import Counter from './info/counter/Counter'
+import BearCounter from './info/bearcounter/BearCounter'
 import BasicLayout from './components/layouts/BasicLayout'
 import PostLayout from './components/layouts/PostLayout'
 import NotFound from './components/NotFound'
@@ -21,15 +24,14 @@ import EmailVerification from './auth/EmailVerification'
 import ProtectedRoute from './auth/ProtectedRoute'
 
 function App() {
+  // 사용자 로그인했나요? isAuthenticated
   return (
     <Routes>
-      {/* 인증 관련 라우트 */}
       <Route path="/auth/login" element={<Login />} />
       <Route path="/auth/signup" element={<Signup />} />
       <Route path="/auth/email-verification" element={<EmailVerification />} />
       <Route path="/auth/logout" element={<Logout />} />
       
-      {/* 보호된 라우트 */}
       <Route path="/" element={<Home />} />
       <Route path="/info" element={<BasicLayout />}>
         <Route path="about" element={<About />} />
@@ -39,11 +41,16 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="counter" element={<Counter />} />
+        <Route path="bearcounter" element={<BearCounter />} />
         <Route path="location" element={<Location />} />
       </Route>
       <Route path="/posts" element={<PostLayout />}>
         <Route index element={<Posts />} />
         <Route path=":postId" element={<Post/>} />
+      </Route>
+      <Route path="/users" element={<PostLayout />}>
+        <Route index element={<Users />} />
+        <Route path=":userId" element={<User />} />
       </Route>
       <Route path="/fireposts" element={<PostLayout />}>
         <Route index element={<FirePosts />} />

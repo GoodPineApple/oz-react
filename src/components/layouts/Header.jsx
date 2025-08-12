@@ -10,10 +10,12 @@ import {
 import { 
   Home as HomeIcon,
   Article as ArticleIcon,
+  Person as PersonIcon,
   Info as InfoIcon,
   CheckCircle as CheckCircleIcon,
   LocationOn as LocationIcon,
-  Add as CounterIcon
+  Add as CounterIcon,
+  Pets as BearIcon
 } from '@mui/icons-material'
 
 function Header() {
@@ -43,6 +45,17 @@ function Header() {
               }}
             >
               Posts
+            </Button>
+            <Button
+              component={Link}
+              to="/users"
+              startIcon={<PersonIcon />}
+              sx={{ 
+                color: 'text.secondary',
+                '&:hover': { color: 'primary.main' }
+              }}
+            >
+              Users
             </Button>
             <Button
               component={Link}
@@ -76,6 +89,17 @@ function Header() {
               }}
             >
               Counter
+            </Button>
+            <Button
+              component={Link}
+              to="/info/bearcounter"
+              startIcon={<BearIcon />}
+              sx={{ 
+                color: 'text.secondary',
+                '&:hover': { color: 'secondary.main' }
+              }}
+            >
+              Bear
             </Button>
             <Button
               component={Link}
