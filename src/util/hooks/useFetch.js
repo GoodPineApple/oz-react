@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import axios from 'axios'
 
 /**
@@ -13,12 +13,15 @@ const useFetch = (url, options = {}, immediate = true) => {
   const [loading, setLoading] = useState(immediate)
   const [error, setError] = useState(null)
 
+  // options 객체의 안정적인 참조를 위한 memoization
+  const memoizedOptions = useMemo(() => options, [JSON.stringify(options)])
+
   const fetchData = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
       
-      const response = await axios.get(url, options)
+      const response = await axios.get(url, memoizedOptions)
       setData(response.data)
     } catch (err) {
       console.error(`Fetch error for ${url}:`, err)
@@ -26,19 +29,19 @@ const useFetch = (url, options = {}, immediate = true) => {
     } finally {
       setLoading(false)
     }
-  }, [url, options])
+  }, [url, memoizedOptions])
 
   useEffect(() => {
     if (immediate && url) {
       fetchData()
     }
-  }, [immediate, url, fetchData])
+  }, [url, immediate, fetchData])
 
   const refetch = useCallback(() => {
     if (url) {
       fetchData()
     }
-  }, [url, fetchData])
+  }, [fetchData])
 
   return {
     data,

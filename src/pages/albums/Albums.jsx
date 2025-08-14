@@ -8,8 +8,10 @@ import {
 import AlbumsHeader from '../../components/albums/AlbumsHeader'
 import AlbumsGrid from '../../components/albums/AlbumsGrid'
 import useAlbums from '../../util/hooks/useAlbums'
+import Button from '../../components/Button'
 
 const Albums = () => {
+  const [ count, setCount ] = useState(0)
   const { albums, loading, error, refetch } = useAlbums()
   const [currentPage, setCurrentPage] = useState(1)
   
@@ -32,6 +34,8 @@ const Albums = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Button onClick={() => setCount(count + 1)}>count: {count}</Button>
+      <Button onClick={refetch}>refetch</Button>
       <AlbumsHeader albumsCount={albums.length} />
 
       {/* Error Display */}

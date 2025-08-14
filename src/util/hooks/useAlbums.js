@@ -6,8 +6,9 @@ import useFetch from './useFetch'
  * @returns {object} { albums, loading, error, refetch }
  */
 const useAlbums = () => {
+  console.log('useAlbums')
   const { data: albums, loading, error, refetch } = useFetch(
-    'https://jsonplaceholder.typicode.com/albums'
+    'https://jsonplaceholder.typicode.com/albums',
   )
 
   return {
