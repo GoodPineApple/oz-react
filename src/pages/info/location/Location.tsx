@@ -7,7 +7,13 @@ import { useLocation } from 'react-router';
 
 import { useState } from 'react';
 
-const ChildComponent = ({ onClick }) => {
+type ChipColor = 'primary' | 'secondary' | 'info' | 'warning' | 'error' | 'success' | 'default';
+
+interface ChildComponentProps {
+  onClick: () => void;
+}
+
+const ChildComponent: React.FC<ChildComponentProps> = ({ onClick }) => {
   console.log('ChildComponent rendered');
   return <button onClick={onClick}>Click Me</button>;
 };
@@ -64,7 +70,7 @@ function Location() {
           
           <Grid container spacing={3}>
             {locationData.map((item, index) => (
-              <Grid item xs={12} md={6} key={index}>
+              <Grid key={index} component="div">
                 <Card elevation={2} sx={{ height: '100%' }}>
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -77,7 +83,7 @@ function Location() {
                     <Chip
                       label={item.value}
                       variant="outlined"
-                      color={item.color}
+                      color={item.color as ChipColor}
                       sx={{ 
                         fontFamily: 'monospace',
                         fontSize: '0.875rem',
