@@ -1,0 +1,26 @@
+import Card from "../common/Card";
+
+const Greeting = () => {
+  const name = "Taem";
+  return (
+    <div>
+      <h1>Hello, {name}</h1>
+    </div>
+  );
+};
+
+const Button = () => {
+  return <button>Click me</button>;
+};
+
+const MainPage = () => {
+  return (
+    <>
+      <Greeting />
+      <Button />
+      <Card />
+    </>
+  );
+};
+
+export default MainPage;
