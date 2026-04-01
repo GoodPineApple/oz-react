@@ -1,4 +1,5 @@
 import "./App.css";
+import Header from "./layout/Header";
 
 const Greeting = () => {
   const name = "Taem";
@@ -16,6 +17,7 @@ const Button = () => {
 function App() {
   return (
     <>
+      <Header />
       <Greeting />
       <Button />
     </>
