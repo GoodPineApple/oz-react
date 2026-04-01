@@ -1,4 +1,5 @@
 import Card from "../common/Card";
+import StyledBox from "../common/box/StyledBox";
 
 const Greeting = () => {
   const name = "Taem";
@@ -19,6 +20,7 @@ const MainPage = () => {
       <Greeting />
       <Button />
       <Card />
+      <StyledBox />
     </>
   );
 };
