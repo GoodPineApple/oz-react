@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       <Header />
-      <Day25Page />
       {/* <MainPage /> */}
+      <Day25Page />
       <Footer />
     </>
   );
