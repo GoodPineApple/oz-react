@@ -1,13 +1,15 @@
 import "./App.css";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
-import MainPage from "./main/MainPage";
+import Day25Page from "./day25/Day25Page";
+// import MainPage from "./main/MainPage";
 
 function App() {
   return (
     <>
       <Header />
-      <MainPage />
+      <Day25Page />
+      {/* <MainPage /> */}
       <Footer />
     </>
   );
