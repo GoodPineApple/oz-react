@@ -3,6 +3,7 @@ import Counter from "./counter/Counter";
 import UserForm from "./user-form/UserForm";
 import DataFetch from "./data-fetch/DataFetch";
 import InputControl from "../common/input/InputControl";
+import Card from "../common/card/Card";
 
 const Day25Page = () => {
   const [text, setText] = useState("");
@@ -14,7 +15,10 @@ const Day25Page = () => {
       <UserForm />
       <DataFetch />
       <InputControl value={text} onValueChange={setText} />
-      <p>Text: {text}</p>
+      <Card>
+        <h2>Card Title</h2>
+        <p>Text: {text}</p>
+      </Card>
     </>
   );
 };
