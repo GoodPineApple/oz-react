@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
+  const [userId, setUserId] = useState(0);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -19,11 +20,23 @@ const PostList = () => {
     fetchPosts();
   }, []);
 
+  const filteredPosts = posts.filter((post) => post.userId === userId);
+  console.log(filteredPosts);
+
   return (
     <div>
       <h1>Post List</h1>
-      {posts.map((post) => (
-        <PostItem key={post.id} post={post} />
+      <div>
+        <input
+          type="number"
+          placeholder="UserID"
+          // value={userId}
+          onChange={(e) => setUserId(Number(e.target.value))}
+        />
+        <p>User ID: {userId}</p>
+      </div>
+      {filteredPosts.map((post) => (
+        <PostItem key={`post-${post.id}`} post={post} />
       ))}
     </div>
   );
@@ -32,8 +45,11 @@ const PostList = () => {
 const PostItem = ({ post }) => {
   return (
     <div key={post.id}>
-      <h2>{post.title}</h2>
+      <h2>
+        {post.id}. {post.title}
+      </h2>
       <p>{post.body}</p>
+      <p>User ID: {post.userId}</p>
     </div>
   );
 };

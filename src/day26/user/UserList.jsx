@@ -23,7 +23,7 @@ const UserList = () => {
     <div>
       <h1>User List</h1>
       {users.map((user) => (
-        <UserItem key={user.id} user={user} />
+        <UserItem key={`user-${user.id}`} user={user} />
       ))}
     </div>
   );
