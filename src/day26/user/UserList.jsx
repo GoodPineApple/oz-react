@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/users",
         );
@@ -14,6 +16,8 @@ const UserList = () => {
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchUsers();
@@ -22,9 +26,11 @@ const UserList = () => {
   return (
     <div>
       <h1>User List</h1>
-      {users.map((user) => (
-        <UserItem key={`user-${user.id}`} user={user} />
-      ))}
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && users.length === 0 && <p>No users found</p>}
+      {!isLoading &&
+        users.length > 0 &&
+        users.map((user) => <UserItem key={`user-${user.id}`} user={user} />)}
     </div>
   );
 };
