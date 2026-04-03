@@ -10,6 +10,7 @@ const PostList = () => {
           "https://jsonplaceholder.typicode.com/posts",
         );
         const data = await response.json();
+        console.log(data);
         setPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -22,11 +23,17 @@ const PostList = () => {
     <div>
       <h1>Post List</h1>
       {posts.map((post) => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.body}</p>
-        </div>
+        <PostItem key={post.id} post={post} />
       ))}
+    </div>
+  );
+};
+
+const PostItem = ({ post }) => {
+  return (
+    <div key={post.id}>
+      <h2>{post.title}</h2>
+      <p>{post.body}</p>
     </div>
   );
 };
