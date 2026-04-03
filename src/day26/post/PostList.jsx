@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [userId, setUserId] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/posts",
         );
@@ -15,6 +17,8 @@ const PostList = () => {
         setPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchPosts();
@@ -35,9 +39,15 @@ const PostList = () => {
         />
         <p>User ID: {userId}</p>
       </div>
-      {filteredPosts.map((post) => (
-        <PostItem key={`post-${post.id}`} post={post} />
-      ))}
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : filteredPosts.length > 0 ? (
+        filteredPosts.map((post) => (
+          <PostItem key={`post-${post.id}`} post={post} />
+        ))
+      ) : (
+        <p>No posts found</p>
+      )}
     </div>
   );
 };
