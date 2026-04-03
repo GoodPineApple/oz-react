@@ -10,6 +10,7 @@ const UserList = () => {
           "https://jsonplaceholder.typicode.com/users",
         );
         const data = await response.json();
+        console.log(data);
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -22,11 +23,17 @@ const UserList = () => {
     <div>
       <h1>User List</h1>
       {users.map((user) => (
-        <div key={user.id}>
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-        </div>
+        <UserItem key={user.id} user={user} />
       ))}
+    </div>
+  );
+};
+
+const UserItem = ({ user }) => {
+  return (
+    <div key={user.id}>
+      <h2>{user.name}</h2>
+      <p>{user.email}</p>
     </div>
   );
 };
