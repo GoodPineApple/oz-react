@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams, useEffect } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const UserView = () => {
   const [user, setUser] = useState(null);
