@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [userId, setUserId] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const userIdParam = searchParams.get("userId");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -22,7 +25,10 @@ const PostList = () => {
       }
     };
     fetchPosts();
-  }, []);
+    if (userIdParam) {
+      setUserId(Number(userIdParam));
+    }
+  }, [userIdParam]);
 
   const filteredPosts = posts.filter((post) => post.userId === userId);
   console.log(filteredPosts);
@@ -32,9 +38,9 @@ const PostList = () => {
       <h1>Post List</h1>
       <div>
         <input
-          type="number"
+          type="text"
           placeholder="UserID"
-          // value={userId}
+          value={userId}
           onChange={(e) => setUserId(Number(e.target.value))}
         />
         <p>User ID: {userId}</p>
