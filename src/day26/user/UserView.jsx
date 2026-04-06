@@ -18,10 +18,15 @@ const UserView = () => {
     fetchUser();
   }, [id]);
 
+  const handleNavigateToPost = () => {
+    navigate(`/day26/post?userId=${id}`);
+  };
+
   return (
     <div>
       <h1>User View</h1>
       <button onClick={() => navigate(-1)}>Back</button>
+      <button onClick={handleNavigateToPost}>게시글 보러 이동하기</button>
       <div>
         <p>User ID: {id}</p>
       </div>
