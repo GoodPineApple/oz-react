@@ -1,19 +1,16 @@
 import "./App.css";
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
-// import Day25Page from "./day25/Day25Page";
+import { Routes, Route } from "react-router-dom";
 import MainPage from "./main/MainPage";
-// import Day26Page from "./day26/Day26Page";
+import Day25Page from "./day25/Day25Page";
+import Day26Page from "./day26/Day26Page";
 
 function App() {
   return (
-    <>
-      <Header />
-      <MainPage />
-      {/* <Day25Page /> */}
-      {/* <Day26Page /> */}
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/day25" element={<Day25Page />} />
+      <Route path="/day26" element={<Day26Page />} />
+    </Routes>
   );
 }
 
