@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UserView = () => {
   const [user, setUser] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,6 +21,7 @@ const UserView = () => {
   return (
     <div>
       <h1>User View</h1>
+      <button onClick={() => navigate(-1)}>Back</button>
       <div>
         <p>User ID: {id}</p>
       </div>
