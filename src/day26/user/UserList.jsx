@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -38,7 +39,9 @@ const UserList = () => {
 const UserItem = ({ user }) => {
   return (
     <div key={user.id}>
-      <h2>{user.name}</h2>
+      <Link to={`/day26/user/${user.id}`}>
+        <h2>{user.name}</h2>
+      </Link>
       <p>{user.email}</p>
     </div>
   );
