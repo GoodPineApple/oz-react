@@ -4,6 +4,9 @@ import Layout from "./layout/Layout";
 import MainPage from "./main/MainPage";
 import Day25Page from "./day25/Day25Page";
 import Day26Page from "./day26/Day26Page";
+import UserList from "./day26/user/UserList";
+import PostList from "./day26/post/PostList";
+import UserView from "./day26/user/UserView";
 
 function App() {
   return (
@@ -12,6 +15,9 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/day25" element={<Day25Page />} />
         <Route path="/day26" element={<Day26Page />} />
+        <Route path="/day26/user" element={<UserList />} />
+        <Route path="/day26/post" element={<PostList />} />
+        <Route path="/day26/user/:id" element={<UserView />} />
       </Route>
     </Routes>
   );
