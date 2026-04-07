@@ -4,8 +4,8 @@ import StyledBox from "../common/box/StyledBox";
 const Greeting = () => {
   const name = "Taem";
   return (
-    <div>
-      <h1>Hello, {name}</h1>
+    <div className="text-center p-4">
+      <h1 className="text-2xl font-bold">Hello, {name}</h1>
     </div>
   );
 };
