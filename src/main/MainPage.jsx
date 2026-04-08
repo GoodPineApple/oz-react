@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import Card from "../common/card/Card";
 import StyledBox from "../common/box/StyledBox";
 
@@ -5,7 +6,9 @@ const Greeting = () => {
   const name = "Taem";
   return (
     <div className="text-center p-4">
-      <h1 className="text-2xl font-bold">Hello, {name}</h1>
+      <Typography variant="h3" component="h1">
+        Hello, {name}
+      </Typography>
     </div>
   );
 };
