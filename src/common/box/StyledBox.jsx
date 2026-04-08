@@ -1,10 +1,12 @@
+import Box from "@mui/material/Box";
+// import {Box} from '@mui/material';
+
 const StyledBox = () => {
-  const boxStyle = {
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    padding: "10px",
-  };
-  return <div style={boxStyle}>Styled Box</div>;
+  return (
+    <Box component="section" sx={{ p: 2, border: "1px dashed grey" }}>
+      Styled Box
+    </Box>
+  );
 };
 
 export default StyledBox;

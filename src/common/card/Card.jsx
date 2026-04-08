@@ -1,17 +1,19 @@
-import "./Card.css";
+import { Card as MuiCard, CardHeader, CardContent } from "@mui/material";
 
 const Card = ({ children }) => {
   return (
-    <div className="card">
+    <MuiCard>
       {children ? (
         children
       ) : (
         <>
-          <h2>Card Title</h2>
-          <p>Card Content</p>
+          <CardHeader title="Card Title" />
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
         </>
       )}
-    </div>
+    </MuiCard>
   );
 };
 
