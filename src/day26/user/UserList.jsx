@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import CircularProgress from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -13,7 +21,6 @@ const UserList = () => {
           "https://jsonplaceholder.typicode.com/users",
         );
         const data = await response.json();
-        console.log(data);
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -25,25 +32,46 @@ const UserList = () => {
   }, []);
 
   return (
-    <div>
-      <h1>User List</h1>
-      {isLoading && <p>Loading...</p>}
-      {!isLoading && users.length === 0 && <p>No users found</p>}
-      {!isLoading &&
-        users.length > 0 &&
-        users.map((user) => <UserItem key={`user-${user.id}`} user={user} />)}
-    </div>
+    <Stack spacing={2}>
+      <Typography variant="h4" component="h1">
+        User List
+      </Typography>
+      {isLoading && (
+        <BoxCentered>
+          <CircularProgress />
+        </BoxCentered>
+      )}
+      {!isLoading && users.length === 0 && (
+        <Typography color="text.secondary">No users found</Typography>
+      )}
+      {!isLoading && users.length > 0 && (
+        <Paper variant="outlined">
+          <List disablePadding>
+            {users.map((user) => (
+              <UserItem key={`user-${user.id}`} user={user} />
+            ))}
+          </List>
+        </Paper>
+      )}
+    </Stack>
   );
 };
 
+function BoxCentered({ children }) {
+  return (
+    <Stack alignItems="center" sx={{ py: 4 }}>
+      {children}
+    </Stack>
+  );
+}
+
 const UserItem = ({ user }) => {
   return (
-    <div key={user.id}>
-      <Link to={`/day26/user/${user.id}`}>
-        <h2>{user.name}</h2>
-      </Link>
-      <p>{user.email}</p>
-    </div>
+    <ListItem disablePadding divider>
+      <ListItemButton component={RouterLink} to={`/day26/user/${user.id}`}>
+        <ListItemText primary={user.name} secondary={user.email} />
+      </ListItemButton>
+    </ListItem>
   );
 };
 

@@ -1,21 +1,21 @@
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Stack } from "@mui/material";
 import Card from "../common/card/Card";
 import StyledBox from "../common/box/StyledBox";
 
 const Greeting = () => {
   const name = "Taem";
   return (
-    <div className="text-center p-4">
-      <Typography variant="h3" component="h1">
+    <Stack alignItems="center" sx={{ py: 2 }}>
+      <Typography variant="h3" component="h1" gutterBottom>
         Hello, {name}
       </Typography>
-    </div>
+    </Stack>
   );
 };
 
 const MainPage = () => {
   return (
-    <>
+    <Stack spacing={3} alignItems="center" sx={{ width: "100%" }}>
       <Greeting />
       <Button
         variant="contained"
@@ -24,9 +24,9 @@ const MainPage = () => {
       >
         Click me
       </Button>
-      <Card />
+      <Card sx={{ width: "100%", maxWidth: 480 }} />
       <StyledBox />
-    </>
+    </Stack>
   );
 };
 

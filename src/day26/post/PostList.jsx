@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import CircularProgress from "@mui/material/CircularProgress";
+import Divider from "@mui/material/Divider";
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -16,7 +22,6 @@ const PostList = () => {
           "https://jsonplaceholder.typicode.com/posts",
         );
         const data = await response.json();
-        console.log(data);
         setPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -31,42 +36,54 @@ const PostList = () => {
   }, [userIdParam]);
 
   const filteredPosts = posts.filter((post) => post.userId === userId);
-  console.log(filteredPosts);
 
   return (
-    <div>
-      <h1>Post List</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="UserID"
-          value={userId}
-          onChange={(e) => setUserId(Number(e.target.value))}
-        />
-        <p>User ID: {userId}</p>
-      </div>
+    <Stack spacing={2}>
+      <Typography variant="h4" component="h1">
+        Post List
+      </Typography>
+      <TextField
+        label="User ID"
+        type="number"
+        size="small"
+        value={userId}
+        onChange={(e) => setUserId(Number(e.target.value))}
+        sx={{ maxWidth: 200 }}
+      />
+      <Typography variant="body2" color="text.secondary">
+        User ID: {userId}
+      </Typography>
       {isLoading ? (
-        <p>Loading...</p>
+        <Stack alignItems="center" sx={{ py: 4 }}>
+          <CircularProgress />
+        </Stack>
       ) : filteredPosts.length > 0 ? (
-        filteredPosts.map((post) => (
-          <PostItem key={`post-${post.id}`} post={post} />
-        ))
+        <Stack spacing={0}>
+          {filteredPosts.map((post) => (
+            <PostItem key={`post-${post.id}`} post={post} />
+          ))}
+        </Stack>
       ) : (
-        <p>No posts found</p>
+        <Typography color="text.secondary">No posts found</Typography>
       )}
-    </div>
+    </Stack>
   );
 };
 
 const PostItem = ({ post }) => {
   return (
-    <div key={post.id}>
-      <h2>
+    <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
+      <Typography variant="h6" component="h2" gutterBottom>
         {post.id}. {post.title}
-      </h2>
-      <p>{post.body}</p>
-      <p>User ID: {post.userId}</p>
-    </div>
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        {post.body}
+      </Typography>
+      <Divider sx={{ my: 1 }} />
+      <Typography variant="caption" color="text.secondary">
+        User ID: {post.userId}
+      </Typography>
+    </Paper>
   );
 };
 

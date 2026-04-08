@@ -1,15 +1,22 @@
-import { Card as MuiCard, CardHeader, CardContent } from "@mui/material";
+import {
+  Card as MuiCard,
+  CardHeader,
+  CardContent,
+  Typography,
+} from "@mui/material";
 
-const Card = ({ children }) => {
+const Card = ({ children, sx }) => {
   return (
-    <MuiCard>
+    <MuiCard variant="outlined" sx={sx}>
       {children ? (
         children
       ) : (
         <>
           <CardHeader title="Card Title" />
           <CardContent>
-            <p>Card Content</p>
+            <Typography variant="body1" color="text.secondary">
+              Card Content
+            </Typography>
           </CardContent>
         </>
       )}
