@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import Card from "../common/card/Card";
 import StyledBox from "../common/box/StyledBox";
 
@@ -13,15 +13,17 @@ const Greeting = () => {
   );
 };
 
-const Button = () => {
-  return <button>Click me</button>;
-};
-
 const MainPage = () => {
   return (
     <>
       <Greeting />
-      <Button />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => alert("Button clicked")}
+      >
+        Click me
+      </Button>
       <Card />
       <StyledBox />
     </>
