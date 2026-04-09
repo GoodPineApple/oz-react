@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./layout/Layout";
 import MainPage from "./main/MainPage";
@@ -10,24 +9,9 @@ import UserView from "./day26/user/UserView";
 import NotFound from "./layout/NotFound";
 import MyPage from "./mypage/MyPage";
 import PrivateRoute from "./layout/PrivateRoute";
-import { auth } from "./util/firebase";
+import AuthPage from "./auth/AuthPage";
 
 function App() {
-  // const isAuth = false; // 인증 여부
-  const [isAuth, setIsAuth] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log(user);
-      if (user) {
-        setIsAuth(true);
-      } else {
-        setIsAuth(false);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -37,7 +21,8 @@ function App() {
         <Route path="/day26/user" element={<UserList />} />
         <Route path="/day26/post" element={<PostList />} />
         <Route path="/day26/user/:id" element={<UserView />} />
-        <Route element={<PrivateRoute isAuth={isAuth} />}>
+        <Route path="/login" element={<AuthPage />} />
+        <Route element={<PrivateRoute />}>
           <Route path="/mypage" element={<MyPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />

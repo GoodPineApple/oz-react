@@ -1,20 +1,29 @@
+import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { signOut } from "firebase/auth";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import { auth } from "../util/firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const navItems = [
   { label: "Home", to: "/" },
   { label: "Day 25", to: "/day25" },
-  { label: "Day 26", to: "/day26" },
   { label: "User", to: "/day26/user" },
   { label: "Post", to: "/day26/post" },
 ];
 
 const Header = () => {
+  const { user } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    signOut(auth);
+  };
+
   return (
     <AppBar position="sticky" color="primary">
       <Toolbar sx={{ flexWrap: "wrap", gap: 1, py: 1 }}>
@@ -38,6 +47,7 @@ const Header = () => {
           useFlexGap
           flexWrap="wrap"
           justifyContent="flex-end"
+          alignItems="center"
         >
           {navItems.map(({ label, to }) => (
             <Button
@@ -50,6 +60,37 @@ const Header = () => {
               {label}
             </Button>
           ))}
+          {user ? (
+            <>
+              <Button
+                component={RouterLink}
+                to="/mypage"
+                color="inherit"
+                size="small"
+              >
+                MyPage
+              </Button>
+              <Button
+                type="button"
+                color="inherit"
+                size="small"
+                onClick={handleLogout}
+              >
+                로그아웃
+              </Button>
+            </>
+          ) : (
+            <Button
+              component={RouterLink}
+              to="/login"
+              color="inherit"
+              size="small"
+              variant="outlined"
+              sx={{ borderColor: "rgba(255,255,255,0.5)", color: "inherit" }}
+            >
+              로그인
+            </Button>
+          )}
         </Stack>
       </Toolbar>
     </AppBar>
