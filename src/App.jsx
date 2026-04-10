@@ -10,6 +10,8 @@ import NotFound from "./layout/NotFound";
 import MyPage from "./mypage/MyPage";
 import PrivateRoute from "./layout/PrivateRoute";
 import AuthPage from "./auth/AuthPage";
+import AlbumList from "./albums/AlbumList";
+import AlbumPhotosPage from "./albums/AlbumPhotosPage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/day26/user" element={<UserList />} />
         <Route path="/day26/post" element={<PostList />} />
         <Route path="/day26/user/:id" element={<UserView />} />
+        <Route path="/albums" element={<AlbumList />} />
+        <Route path="/albums/:albumId" element={<AlbumPhotosPage />} />
         <Route path="/login" element={<AuthPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/mypage" element={<MyPage />} />

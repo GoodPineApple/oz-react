@@ -15,6 +15,7 @@ const navItems = [
   { label: "Day 25", to: "/day25" },
   { label: "User", to: "/day26/user" },
   { label: "Post", to: "/day26/post" },
+  { label: "Albums", to: "/albums" },
 ];
 
 const Header = () => {
