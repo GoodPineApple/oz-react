@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { MyThemeContext } from "../context/MyThemeContext";
 
 const Footer = () => {
+  const { theme } = useContext(MyThemeContext);
   return (
     <Box
       component="footer"
@@ -13,7 +16,7 @@ const Footer = () => {
         textAlign: "center",
       }}
     >
-      <Typography variant="body2">Footer</Typography>
+      <Typography variant="body2">Footer ({theme})</Typography>
     </Box>
   );
 };

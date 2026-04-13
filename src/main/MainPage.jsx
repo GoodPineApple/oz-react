@@ -1,13 +1,16 @@
+import { useContext } from "react";
 import { Typography, Button, Stack } from "@mui/material";
 import Card from "../common/card/Card";
 import StyledBox from "../common/box/StyledBox";
+import { MyThemeContext } from "../context/MyThemeContext";
 
 const Greeting = () => {
+  const { theme } = useContext(MyThemeContext);
   const name = "Taem";
   return (
     <Stack alignItems="center" sx={{ py: 2 }}>
       <Typography variant="h3" component="h1" gutterBottom>
-        Hello, {name}
+        Hello, {name} ({theme})
       </Typography>
     </Stack>
   );

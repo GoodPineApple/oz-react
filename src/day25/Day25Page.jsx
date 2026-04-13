@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
@@ -8,14 +8,16 @@ import UserForm from "./user-form/UserForm";
 import DataFetch from "./data-fetch/DataFetch";
 import InputControl from "../common/input/InputControl";
 import Card from "../common/card/Card";
+import { MyThemeContext } from "../context/MyThemeContext";
 
 const Day25Page = () => {
   const [text, setText] = useState("");
+  const { theme } = useContext(MyThemeContext);
 
   return (
     <Stack spacing={3} sx={{ maxWidth: 720, mx: "auto" }}>
       <Typography variant="h4" component="h1">
-        Day 25
+        Day 25 ({theme})
       </Typography>
       <Counter />
       <Divider />
