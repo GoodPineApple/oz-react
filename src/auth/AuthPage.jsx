@@ -19,6 +19,7 @@ import Box from "@mui/material/Box";
 import GoogleIcon from "@mui/icons-material/Google";
 import { auth, googleProvider } from "../util/firebase";
 import { AuthContext } from "../context/AuthContext";
+import { AlertContext } from "../context/AlertContext";
 
 function getAuthErrorMessage(code) {
   switch (code) {
@@ -45,13 +46,13 @@ const AuthPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, loading } = useContext(AuthContext);
+  const showAlert = useContext(AlertContext);
 
   const [tab, setTab] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
 
   const redirectPath =
     location.state?.from?.pathname && location.state.from.pathname !== "/login"
@@ -65,14 +66,14 @@ const AuthPage = () => {
   }, [loading, user, navigate, redirectPath]);
 
   const handleGoogle = async () => {
-    setError("");
     setSubmitting(true);
     try {
       await signInWithPopup(auth, googleProvider);
       navigate(redirectPath, { replace: true });
     } catch (e) {
-      setError(
+      showAlert(
         getAuthErrorMessage(e.code) || e.message || "로그인에 실패했습니다.",
+        "error",
       );
     } finally {
       setSubmitting(false);
@@ -81,14 +82,14 @@ const AuthPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
     setSubmitting(true);
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password);
       navigate(redirectPath, { replace: true });
     } catch (e) {
-      setError(
+      showAlert(
         getAuthErrorMessage(e.code) || e.message || "로그인에 실패했습니다.",
+        "error",
       );
     } finally {
       setSubmitting(false);
@@ -97,13 +98,12 @@ const AuthPage = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError("");
     if (password !== passwordConfirm) {
-      setError("비밀번호가 일치하지 않습니다.");
+      showAlert("비밀번호가 일치하지 않습니다.", "error");
       return;
     }
     if (password.length < 6) {
-      setError("비밀번호는 6자 이상이어야 합니다.");
+      showAlert("비밀번호는 6자 이상이어야 합니다.", "error");
       return;
     }
     setSubmitting(true);
@@ -111,8 +111,9 @@ const AuthPage = () => {
       await createUserWithEmailAndPassword(auth, email.trim(), password);
       navigate(redirectPath, { replace: true });
     } catch (e) {
-      setError(
+      showAlert(
         getAuthErrorMessage(e.code) || e.message || "회원가입에 실패했습니다.",
+        "error",
       );
     } finally {
       setSubmitting(false);
@@ -129,19 +130,12 @@ const AuthPage = () => {
           value={tab}
           onChange={(_, v) => {
             setTab(v);
-            setError("");
           }}
           sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}
         >
           <Tab label="로그인" />
           <Tab label="회원가입" />
         </Tabs>
-
-        {error ? (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        ) : null}
 
         <Stack spacing={2}>
           <Button

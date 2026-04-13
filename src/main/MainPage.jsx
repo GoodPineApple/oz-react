@@ -20,7 +20,6 @@ const Greeting = () => {
 const MainPage = () => {
   const showAlert = useContext(AlertContext);
   const handleClick = () => {
-    alert("Button clicked");
     showAlert("Hello, World!", "success");
   };
   return (
