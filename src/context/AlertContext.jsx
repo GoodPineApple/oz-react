@@ -10,9 +10,10 @@ const AlertProvider = ({ children }) => {
     open: false,
     message: "",
     severity: "info", // "success", "error", "warning", "info"
+    duration: 6000,
   });
-  const showAlert = (message, severity) => {
-    setAlert({ open: true, message, severity });
+  const showAlert = (message, severity, duration = 6000) => {
+    setAlert({ open: true, message, severity, duration });
   };
   const handleClose = () => {
     setAlert({ ...alert, open: false });
@@ -21,7 +22,11 @@ const AlertProvider = ({ children }) => {
   return (
     <AlertContext.Provider value={showAlert}>
       {children}
-      <Snackbar open={alert.open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={alert.duration}
+        onClose={handleClose}
+      >
         <Alert
           onClose={handleClose}
           severity={alert.severity}
