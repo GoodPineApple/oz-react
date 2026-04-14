@@ -6,37 +6,19 @@ import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
+import usePostStore from "../../store/postStore";
 
 const PostList = () => {
-  const [posts, setPosts] = useState([]);
-  const [userId, setUserId] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const userIdParam = searchParams.get("userId");
+  const [userId, setUserId] = useState(userIdParam ? Number(userIdParam) : 0);
+  const { posts, isLoading, getPosts } = usePostStore();
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/posts",
-        );
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchPosts();
-    if (userIdParam) {
-      setUserId(Number(userIdParam));
-    }
-  }, [userIdParam]);
+    getPosts();
+  }, [getPosts]);
 
   const filteredPosts = posts.filter((post) => post.userId === userId);
-
   return (
     <Stack spacing={2}>
       <Typography variant="h4" component="h1">
