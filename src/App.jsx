@@ -12,12 +12,16 @@ import PrivateRoute from "./layout/PrivateRoute";
 import AuthPage from "./auth/AuthPage";
 import AlbumList from "./albums/AlbumList";
 import AlbumPhotosPage from "./albums/AlbumPhotosPage";
+import ReduxCounterPage from "./counters/ReduxCounterPage";
+import ZustandCounterPage from "./counters/ZustandCounterPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/counter-redux" element={<ReduxCounterPage />} />
+        <Route path="/counter-zustand" element={<ZustandCounterPage />} />
         <Route path="/day25" element={<Day25Page />} />
         <Route path="/day26" element={<Day26Page />} />
         <Route path="/day26/user" element={<UserList />} />

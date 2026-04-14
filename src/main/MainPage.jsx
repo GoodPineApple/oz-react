@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { Typography, Button, Stack } from "@mui/material";
 import Card from "../common/card/Card";
 import StyledBox from "../common/box/StyledBox";
@@ -28,6 +29,24 @@ const MainPage = () => {
       <Button variant="contained" color="primary" onClick={handleClick}>
         Click me
       </Button>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+        <Button
+          component={RouterLink}
+          to="/counter-redux"
+          variant="outlined"
+          color="primary"
+        >
+          Redux Toolkit 카운터
+        </Button>
+        <Button
+          component={RouterLink}
+          to="/counter-zustand"
+          variant="outlined"
+          color="secondary"
+        >
+          Zustand 카운터
+        </Button>
+      </Stack>
       <Card sx={{ width: "100%", maxWidth: 480 }} />
       <StyledBox />
     </Stack>
