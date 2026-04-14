@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -6,23 +6,19 @@ import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
+import useUserStore from "../../store/userStore";
 
 const UserView = () => {
-  const [user, setUser] = useState(null);
+  const { user, getUser, resetUser } = useUserStore();
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!id) return;
-    const fetchUser = async () => {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${id}`,
-      );
-      const data = await response.json();
-      setUser(data);
-    };
-    fetchUser();
-  }, [id]);
+    resetUser();
+    if (id) {
+      getUser(id);
+    }
+  }, [id, getUser, resetUser]);
 
   const handleNavigateToPost = () => {
     navigate(`/day26/post?userId=${id}`);
@@ -37,7 +33,11 @@ const UserView = () => {
         <Button variant="outlined" onClick={() => navigate(-1)}>
           Back
         </Button>
-        <Button variant="contained" onClick={handleNavigateToPost} disabled={!id}>
+        <Button
+          variant="contained"
+          onClick={handleNavigateToPost}
+          disabled={!id}
+        >
           게시글 보러 이동하기
         </Button>
       </Stack>

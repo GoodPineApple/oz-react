@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
@@ -8,28 +8,14 @@ import ListItemText from "@mui/material/ListItemText";
 import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import useUserStore from "../../store/userStore";
 
 const UserList = () => {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { users, isLoading, getUsers } = useUserStore();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users",
-        );
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUsers();
-  }, []);
+    getUsers();
+  }, [getUsers]);
 
   return (
     <Stack spacing={2}>
