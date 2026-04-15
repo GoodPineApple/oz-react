@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { API_URL } from "../util/config";
+import { axios } from "../util/axios";
 
 const POST_PATH = "/posts";
 const POST_URL = `${API_URL}${POST_PATH}`;
@@ -20,9 +21,8 @@ const usePostStore = create((set) => ({
   getPosts: async () => {
     try {
       set({ isLoading: true });
-      const response = await fetch(`${POST_URL}`);
-      const data = await response.json();
-      set({ posts: data });
+      const response = await axios.get(`${POST_URL}`);
+      set({ posts: response.data });
     } catch (error) {
       console.error("Error fetching posts:", error);
       set({ isError: true, error: error });
@@ -33,9 +33,8 @@ const usePostStore = create((set) => ({
   getPost: async (postId) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(`${POST_URL}/${postId}`);
-      const data = await response.json();
-      set({ post: data });
+      const response = await axios.get(`${POST_URL}/${postId}`);
+      set({ post: response.data });
     } catch (error) {
       console.error("Error fetching post:", error);
       set({ isError: true, error: error });
@@ -46,12 +45,8 @@ const usePostStore = create((set) => ({
   addPost: async (post) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(`${POST_URL}`, {
-        method: "POST",
-        body: JSON.stringify(post),
-      });
-      const data = await response.json();
-      set((state) => ({ posts: [...state.posts, data] }));
+      const response = await axios.post(`${POST_URL}`, post);
+      set((state) => ({ posts: [...state.posts, response.data] }));
     } catch (error) {
       console.error("Error adding post:", error);
       set({ isError: true, error: error });
@@ -62,13 +57,9 @@ const usePostStore = create((set) => ({
   updatePost: async (postId, post) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(`${POST_URL}/${postId}`, {
-        method: "PUT",
-        body: JSON.stringify(post),
-      });
-      const data = await response.json();
+      const response = await axios.put(`${POST_URL}/${postId}`, post);
       set((state) => ({
-        posts: state.posts.map((p) => (p.id === postId ? data : p)),
+        posts: state.posts.map((p) => (p.id === postId ? response.data : p)),
       }));
     } catch (error) {
       console.error("Error updating post:", error);
@@ -80,9 +71,7 @@ const usePostStore = create((set) => ({
   deletePost: async (postId) => {
     try {
       set({ isLoading: true });
-      await fetch(`${POST_URL}/${postId}`, {
-        method: "DELETE",
-      });
+      await axios.delete(`${POST_URL}/${postId}`);
       set((state) => ({ posts: state.posts.filter((p) => p.id !== postId) }));
     } catch (error) {
       console.error("Error deleting post:", error);
