@@ -8,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import useUserStore from "../../store/userStore";
 
 const UserList = () => {
@@ -22,6 +23,9 @@ const UserList = () => {
       <Typography variant="h4" component="h1">
         User List
       </Typography>
+      <Button variant="contained" component={RouterLink} to={`/day26/user-add`}>
+        사용자 생성
+      </Button>
       {isLoading && (
         <BoxCentered>
           <CircularProgress />

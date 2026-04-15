@@ -1,4 +1,8 @@
 import { create } from "zustand";
+import { API_URL } from "../util/config";
+
+const USER_PATH = "/users";
+const USER_URL = `${API_URL}${USER_PATH}`;
 
 const initialUser = {
   id: 0,
@@ -33,9 +37,7 @@ const useUserStore = create((set) => ({
   getUsers: async () => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/users",
-      );
+      const response = await fetch(`${USER_URL}`);
       const data = await response.json();
       set({ users: data });
     } catch (error) {
@@ -48,9 +50,7 @@ const useUserStore = create((set) => ({
   getUser: async (userId) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${userId}`,
-      );
+      const response = await fetch(`${USER_URL}/${userId}`);
       const data = await response.json();
       set({ user: data });
     } catch (error) {
@@ -63,14 +63,12 @@ const useUserStore = create((set) => ({
   addUser: async (user) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users`,
-        {
-          method: "POST",
-          body: JSON.stringify(user),
-        },
-      );
+      const response = await fetch(`${USER_URL}`, {
+        method: "POST",
+        body: JSON.stringify(user),
+      });
       const data = await response.json();
+      console.log(data);
       set((state) => ({ users: [...state.users, data] }));
     } catch (error) {
       console.error("Error adding user:", error);
@@ -82,13 +80,10 @@ const useUserStore = create((set) => ({
   updateUser: async (userId, user) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${userId}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(user),
-        },
-      );
+      const response = await fetch(`${USER_URL}/${userId}`, {
+        method: "PUT",
+        body: JSON.stringify(user),
+      });
       const data = await response.json();
       set((state) => ({
         users: state.users.map((u) => (u.id === userId ? data : u)),
@@ -103,7 +98,7 @@ const useUserStore = create((set) => ({
   deleteUser: async (userId) => {
     try {
       set({ isLoading: true });
-      await fetch(`https://jsonplaceholder.typicode.com/users/${userId}`, {
+      await fetch(`${USER_URL}/${userId}`, {
         method: "DELETE",
       });
       set((state) => ({ users: state.users.filter((u) => u.id !== userId) }));

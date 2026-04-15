@@ -14,6 +14,7 @@ import AlbumList from "./albums/AlbumList";
 import AlbumPhotosPage from "./albums/AlbumPhotosPage";
 import ReduxCounterPage from "./counters/ReduxCounterPage";
 import ZustandCounterPage from "./counters/ZustandCounterPage";
+import UserAdd from "./day26/user/UserAdd";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/day25" element={<Day25Page />} />
         <Route path="/day26" element={<Day26Page />} />
         <Route path="/day26/user" element={<UserList />} />
+        <Route path="/day26/user-add" element={<UserAdd />} />
         <Route path="/day26/post" element={<PostList />} />
         <Route path="/day26/user/:id" element={<UserView />} />
         <Route path="/albums" element={<AlbumList />} />

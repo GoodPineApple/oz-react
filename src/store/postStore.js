@@ -1,4 +1,8 @@
 import { create } from "zustand";
+import { API_URL } from "../util/config";
+
+const POST_PATH = "/posts";
+const POST_URL = `${API_URL}${POST_PATH}`;
 
 const initialPost = {
   userId: 0,
@@ -16,9 +20,7 @@ const usePostStore = create((set) => ({
   getPosts: async () => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
-      );
+      const response = await fetch(`${POST_URL}`);
       const data = await response.json();
       set({ posts: data });
     } catch (error) {
@@ -31,9 +33,7 @@ const usePostStore = create((set) => ({
   getPost: async (postId) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`,
-      );
+      const response = await fetch(`${POST_URL}/${postId}`);
       const data = await response.json();
       set({ post: data });
     } catch (error) {
@@ -46,13 +46,10 @@ const usePostStore = create((set) => ({
   addPost: async (post) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/posts`,
-        {
-          method: "POST",
-          body: JSON.stringify(post),
-        },
-      );
+      const response = await fetch(`${POST_URL}`, {
+        method: "POST",
+        body: JSON.stringify(post),
+      });
       const data = await response.json();
       set((state) => ({ posts: [...state.posts, data] }));
     } catch (error) {
@@ -65,13 +62,10 @@ const usePostStore = create((set) => ({
   updatePost: async (postId, post) => {
     try {
       set({ isLoading: true });
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(post),
-        },
-      );
+      const response = await fetch(`${POST_URL}/${postId}`, {
+        method: "PUT",
+        body: JSON.stringify(post),
+      });
       const data = await response.json();
       set((state) => ({
         posts: state.posts.map((p) => (p.id === postId ? data : p)),
@@ -86,7 +80,7 @@ const usePostStore = create((set) => ({
   deletePost: async (postId) => {
     try {
       set({ isLoading: true });
-      await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+      await fetch(`${POST_URL}/${postId}`, {
         method: "DELETE",
       });
       set((state) => ({ posts: state.posts.filter((p) => p.id !== postId) }));
