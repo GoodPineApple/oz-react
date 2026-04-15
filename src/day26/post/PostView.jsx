@@ -8,65 +8,62 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
-import Skeleton from "@mui/material/Skeleton";
-import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
-import useUserStore from "../../store/userStore";
+import Skeleton from "@mui/material/Skeleton";
+import usePostStore from "../../store/postStore";
+import PostComments from "./PostComments";
 
-const UserView = () => {
+const PostView = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const {
-    user,
-    getUser,
-    resetUser,
+    post,
+    getPost,
+    deletePost,
+    resetPost,
     resetError,
-    deleteUser,
     isLoading,
     isError,
     error,
-  } = useUserStore();
-  const { id } = useParams();
-  const navigate = useNavigate();
+  } = usePostStore();
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
     resetError();
-    resetUser();
+    resetPost();
     if (id) {
-      getUser(id);
+      getPost(id);
     }
-  }, [id, getUser, resetUser, resetError]);
-
-  const handleNavigateToPost = () => {
-    navigate(`/day26/post?userId=${id}`);
-  };
+  }, [id, getPost, resetPost, resetError]);
 
   const numericId = id ? Number(id) : NaN;
-  const loaded = Boolean(id) && user.id === numericId && !isLoading;
+  const loaded = Boolean(id) && post.id === numericId && !isLoading;
 
   const handleDelete = async () => {
     if (!id) return;
-    await deleteUser(id);
+    await deletePost(id);
     setConfirmOpen(false);
-    if (!useUserStore.getState().isError) {
-      navigate("/day26/user");
+    if (!usePostStore.getState().isError) {
+      navigate("/day26/post");
     }
   };
 
   return (
     <Stack spacing={2}>
       <Typography variant="h4" component="h1">
-        사용자 상세
+        게시글 상세
       </Typography>
       <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
         <Button variant="outlined" onClick={() => navigate(-1)}>
           뒤로
         </Button>
-        <Button variant="outlined" component={RouterLink} to="/day26/user">
+        <Button variant="outlined" component={RouterLink} to="/day26/post">
           목록
         </Button>
         {id && (
@@ -74,7 +71,7 @@ const UserView = () => {
             <Button
               variant="contained"
               component={RouterLink}
-              to={`/day26/user/${id}/edit`}
+              to={`/day26/post/${id}/edit`}
             >
               수정
             </Button>
@@ -87,13 +84,6 @@ const UserView = () => {
             </Button>
           </>
         )}
-        <Button
-          variant="contained"
-          onClick={handleNavigateToPost}
-          disabled={!id}
-        >
-          이 사용자의 게시글
-        </Button>
       </Stack>
       {isError && (
         <Alert severity="error" onClose={resetError}>
@@ -101,58 +91,43 @@ const UserView = () => {
         </Alert>
       )}
       <Paper variant="outlined" sx={{ p: 2 }}>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          User ID: {id ?? "—"}
-        </Typography>
         {!id ? (
           <Typography color="text.secondary">
-            사용자 상세는 목록에서 선택하거나 URL에 id를 넣어 주세요.
+            게시글 id가 없습니다.
           </Typography>
         ) : isLoading && !loaded ? (
-          <Box sx={{ mt: 1 }}>
-            <Skeleton width="60%" height={32} />
-            <Skeleton width="80%" />
-            <Skeleton width="70%" />
-          </Box>
+          <Stack spacing={1} sx={{ mt: 1 }}>
+            <Skeleton width="50%" height={36} />
+            <Skeleton width="100%" />
+            <Skeleton width="90%" />
+          </Stack>
         ) : !loaded ? (
           <Typography color="text.secondary">
-            사용자를 찾을 수 없습니다.
+            게시글을 찾을 수 없습니다.
           </Typography>
         ) : (
           <Stack spacing={2} sx={{ mt: 1 }}>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary">
-                이름
-              </Typography>
-              <Typography variant="body1">{user.name}</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary">
-                이메일
-              </Typography>
-              <Typography variant="body1">{user.email}</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary">
-                전화
-              </Typography>
-              <Typography variant="body1">{user.phone}</Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle2" color="text.secondary">
-                웹사이트
-              </Typography>
-              <Typography variant="body1">{user.website}</Typography>
-            </Box>
+            <Typography variant="body2" color="text.secondary">
+              #{post.id} · 작성자 User ID: {post.userId}
+            </Typography>
+            <Typography variant="h5" component="h2">
+              {post.title}
+            </Typography>
+            <Divider />
+            <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
+              {post.body}
+            </Typography>
           </Stack>
         )}
       </Paper>
 
+      {loaded && <PostComments postId={numericId} />}
+
       <Dialog open={confirmOpen} onClose={() => setConfirmOpen(false)}>
-        <DialogTitle>사용자 삭제</DialogTitle>
+        <DialogTitle>게시글 삭제</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            이 사용자를 삭제할까요? 연관 데이터는 백엔드 정책에 따릅니다.
+            이 게시글을 삭제할까요? 이 작업은 되돌릴 수 없습니다.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -166,4 +141,4 @@ const UserView = () => {
   );
 };
 
-export default UserView;
+export default PostView;

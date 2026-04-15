@@ -15,6 +15,10 @@ import AlbumPhotosPage from "./albums/AlbumPhotosPage";
 import ReduxCounterPage from "./counters/ReduxCounterPage";
 import ZustandCounterPage from "./counters/ZustandCounterPage";
 import UserAdd from "./day26/user/UserAdd";
+import UserEdit from "./day26/user/UserEdit";
+import PostView from "./day26/post/PostView";
+import PostAdd from "./day26/post/PostAdd";
+import PostEdit from "./day26/post/PostEdit";
 
 function App() {
   return (
@@ -27,8 +31,12 @@ function App() {
         <Route path="/day26" element={<Day26Page />} />
         <Route path="/day26/user" element={<UserList />} />
         <Route path="/day26/user-add" element={<UserAdd />} />
-        <Route path="/day26/post" element={<PostList />} />
+        <Route path="/day26/user/:id/edit" element={<UserEdit />} />
         <Route path="/day26/user/:id" element={<UserView />} />
+        <Route path="/day26/post" element={<PostList />} />
+        <Route path="/day26/post-add" element={<PostAdd />} />
+        <Route path="/day26/post/:id/edit" element={<PostEdit />} />
+        <Route path="/day26/post/:id" element={<PostView />} />
         <Route path="/albums" element={<AlbumList />} />
         <Route path="/albums/:albumId" element={<AlbumPhotosPage />} />
         <Route path="/login" element={<AuthPage />} />

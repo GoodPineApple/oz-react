@@ -72,11 +72,13 @@ const useUserStore = create((set) => ({
     }
   },
   updateUser: async (userId, user) => {
+    const idNum = Number(userId);
     try {
       set({ isLoading: true });
       const response = await axios.put(`${USER_URL}/${userId}`, user);
       set((state) => ({
-        users: state.users.map((u) => (u.id === userId ? response.data : u)),
+        users: state.users.map((u) => (u.id === idNum ? response.data : u)),
+        user: state.user.id === idNum ? response.data : state.user,
       }));
     } catch (error) {
       console.error("Error updating user:", error);
@@ -86,10 +88,14 @@ const useUserStore = create((set) => ({
     }
   },
   deleteUser: async (userId) => {
+    const idNum = Number(userId);
     try {
       set({ isLoading: true });
       await axios.delete(`${USER_URL}/${userId}`);
-      set((state) => ({ users: state.users.filter((u) => u.id !== userId) }));
+      set((state) => ({
+        users: state.users.filter((u) => u.id !== idNum),
+        user: state.user.id === idNum ? initialUser : state.user,
+      }));
     } catch (error) {
       console.error("Error deleting user:", error);
       set({ isError: true, error: error });
