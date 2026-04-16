@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, memo } from "react";
+import { useEffect, useState, useCallback, memo, useMemo } from "react";
 
 const MemoPage = () => {
   return (
@@ -10,6 +10,7 @@ const MemoPage = () => {
 };
 
 function ParentComponent() {
+  console.log("ParentComponent rendered");
   const [count, setCount] = useState(0);
   const handleIncrement = () => {
     setCount(count + 1);
@@ -23,15 +24,48 @@ function ParentComponent() {
     console.log("ParentComponent clicked");
   }, []);
 
-  console.log("ParentComponent rendered");
   return (
     <div>
       <h1>ParentComponent</h1>
       <button onClick={handleIncrement}>Increment: {count}</button>
+      <ListComponent />
       <ChildComponent text={`static text`} onClick={handleClick} />
     </div>
   );
 }
+
+const ListComponent = () => {
+  console.log("ListComponent rendered");
+  const items = [
+    "apple",
+    "banana",
+    "cherry",
+    "date",
+    "elderberry",
+    "fig",
+    "grape",
+    "honeydew",
+  ];
+  const [filter, setFilter] = useState("");
+  const filteredItems = useMemo(
+    () => items.filter((item) => item.includes(filter)),
+    [items, filter],
+  );
+  return (
+    <div>
+      <input
+        type="text"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+      />
+      <ul>
+        {filteredItems.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 /**
  * 원칙적으로는 ChildComponent는 ParentComponent가 리렌더링할 때에
