@@ -47,6 +47,14 @@ const MainPage = () => {
           Zustand 카운터
         </Button>
       </Stack>
+      <Button
+        component={RouterLink}
+        to="/memo"
+        variant="outlined"
+        color="primary"
+      >
+        Memoization 페이지
+      </Button>
       <Card sx={{ width: "100%", maxWidth: 480 }} />
       <StyledBox />
     </Stack>

@@ -19,12 +19,14 @@ import UserEdit from "./day26/user/UserEdit";
 import PostView from "./day26/post/PostView";
 import PostAdd from "./day26/post/PostAdd";
 import PostEdit from "./day26/post/PostEdit";
+import MemoPage from "./memo/MemoPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/memo" element={<MemoPage />} />
         <Route path="/counter-redux" element={<ReduxCounterPage />} />
         <Route path="/counter-zustand" element={<ZustandCounterPage />} />
         <Route path="/day25" element={<Day25Page />} />
