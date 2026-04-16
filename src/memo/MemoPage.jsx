@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 
 const MemoPage = () => {
   return (
@@ -14,12 +14,21 @@ function ParentComponent() {
   const handleIncrement = () => {
     setCount(count + 1);
   };
+
+  useEffect(() => {
+    console.log("ParentComponent count changed");
+  }, []);
+
+  const handleClick = useCallback(() => {
+    console.log("ParentComponent clicked");
+  }, []);
+
   console.log("ParentComponent rendered");
   return (
     <div>
       <h1>ParentComponent</h1>
       <button onClick={handleIncrement}>Increment: {count}</button>
-      <ChildComponent text="static text" />
+      <ChildComponent text={`static text`} onClick={handleClick} />
     </div>
   );
 }
@@ -31,14 +40,15 @@ function ParentComponent() {
  * 그런데 이 프로젝트는 ReactCompiler가 활성화되어 있어서,
  * React Compiler가 컴포넌트를 분석해서 자동으로 메모이제이션을 넣어준다.
  *  */
-const ChildComponent = ({ text }) => {
+const ChildComponent = memo(({ text, onClick }) => {
   console.log("ChildComponent rendered");
   return (
     <div>
       <h1>ChildComponent</h1>
       <p>{text}</p>
+      <button onClick={onClick}>Click</button>
     </div>
   );
-};
+});
 
 export default MemoPage;
