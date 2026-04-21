@@ -48,7 +48,7 @@ const PostList = () => {
     );
   };
 
-  const filteredPosts =
+  const filteredPosts: Post[] =
     userIdFilter == null || Number.isNaN(userIdFilter)
       ? posts
       : posts.filter((post) => post.userId === userIdFilter);
@@ -107,9 +107,7 @@ const PostList = () => {
         <DialogTitle>게시글 삭제</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {deleteTarget
-              ? `「${deleteTarget.title}」 글을 삭제할까요?`
-              : ""}
+            {deleteTarget ? `「${deleteTarget.title}」 글을 삭제할까요?` : ""}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -149,11 +147,7 @@ const PostItem = ({ post, onDeleteClick }: PostItemProps) => {
           <Typography variant="h6" component="h2" gutterBottom>
             {post.id}. {post.title}
           </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mb: 2 }}
-          >
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             {post.body}
           </Typography>
         </Box>

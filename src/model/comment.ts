@@ -6,11 +6,19 @@ export interface Comment {
   body: string;
 }
 
-export interface CommentCreate {
-  postId: number;
-  name: string;
-  email: string;
-  body: string;
-}
+export type CommentFormState = Omit<Comment, "id">;
+// export interface CommentCreate {
+//   postId: number;
+//   name: string;
+//   email: string;
+//   body: string;
+// }
 
 export type CommentUpdate = Partial<Omit<Comment, "id">>;
+
+// export interface CommentUpdate {
+//   postId?: number;
+//   name?: string;
+//   email?: string;
+//   body?: string;
+// }
